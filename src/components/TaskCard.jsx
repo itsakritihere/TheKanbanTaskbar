@@ -18,7 +18,13 @@ const TaskCard = memo(function TaskCard({ task, columnId, onDelete }) {
       onDragEnd={() => setDragging(false)}
     >
       <span>{task.title}</span>
-      <button onClick={() => onDelete(columnId, task.id)} aria-label="Delete task">×</button>
+      <button
+  onClick={() => onDelete(columnId, task.id)}
+  aria-label="Delete task"
+  title="Delete task"
+>
+  ×
+</button>
     </article>
   );
 });
