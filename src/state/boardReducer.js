@@ -15,7 +15,7 @@ export const initialState = {
 export function boardReducer(state, action) {
   switch (action.type) {
     case 'ADD_TASK': {
-      const { columnId, task } = action; // id is created by the caller, so the reducer stays pure
+      const { columnId, task } = action; 
       const col = state.columns[columnId];
       return {
         ...state,
@@ -36,8 +36,8 @@ export function boardReducer(state, action) {
     }
 
     case 'MOVE_TASK': {
-      const { taskId, fromId, toId, beforeId } = action; // beforeId = card to insert ahead of, or null for the end
-      if (beforeId === taskId) return state; // dropped on itself: no-op, no re-render
+      const { taskId, fromId, toId, beforeId } = action; 
+      if (beforeId === taskId) return state; 
 
       const from = state.columns[fromId];
       const to = state.columns[toId];

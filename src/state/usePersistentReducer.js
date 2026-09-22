@@ -1,20 +1,35 @@
+
 import { useReducer, useEffect } from 'react';
 
 const KEY = 'kanban-board-v1';
 
 function init(initial) {
-  try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : initial;
-  } catch {
-    return initial;
+  const savedData = localStorage.getItem(KEY);
+
+  if (savedData) {
+    try {
+      return JSON.parse(savedData);
+    } catch (error) {
+      return initial;
+    }
   }
+
+  return initial;
 }
 
 export function usePersistentReducer(reducer, initial) {
-  const [state, dispatch] = useReducer(reducer, initial, init); // lazy init: reads storage once
+  const [state, dispatch] = useReducer(reducer, initial, init);
+
   useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* storage full/blocked */ }
+    const data = JSON.stringify(state);
+
+    try {
+      localStorage.setItem(KEY, data);
+    } catch (error) {
+      // localStorage may not be available
+    }
   }, [state]);
+
   return [state, dispatch];
 }
+
